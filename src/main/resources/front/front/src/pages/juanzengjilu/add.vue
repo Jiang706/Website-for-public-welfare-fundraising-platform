@@ -124,6 +124,7 @@
 					xingming: '',
 					mujuanzhezhanghao: '',
 					mujuanzhexingming: '',
+					mujuanxiangmuId: '',
 				},
 
 
@@ -194,6 +195,7 @@
 				this.type = type;
 				if(type=='cross'){
 					var obj = JSON.parse(localStorage.getItem('crossObj'));
+					this.ruleForm.mujuanxiangmuId = obj.id
 					for (var o in obj){
 						if(o=='juanzengbianhao'){
 							this.ruleForm.juanzengbianhao = obj[o];

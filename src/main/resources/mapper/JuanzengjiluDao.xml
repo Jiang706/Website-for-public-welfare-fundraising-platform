@@ -18,6 +18,11 @@
         <result property="mujuanzhezhanghao" column="mujuanzhezhanghao"/>
         <result property="mujuanzhexingming" column="mujuanzhexingming"/>
         <result property="ispay" column="ispay"/>
+        <result property="mujuanxiangmuId" column="mujuanxiangmu_id"/>
+        <result property="payTime" column="pay_time"/>
+        <result property="merkleStatus" column="merkle_status"/>
+        <result property="merkleBatchNo" column="merkle_batch_no"/>
+        <result property="leafHash" column="leaf_hash"/>
     </resultMap>
 
 	<select id="selectListVO"

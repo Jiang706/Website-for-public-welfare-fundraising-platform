@@ -130,6 +130,33 @@ public class JuanzengjiluEntity<T> implements Serializable {
 	 */
 					
 	private String ispay;
+
+	/**
+	 * 募捐项目ID
+	 */
+	private Long mujuanxiangmuId;
+
+	/**
+	 * 支付时间
+	 */
+	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat
+	private Date payTime;
+
+	/**
+	 * Merkle状态
+	 */
+	private String merkleStatus;
+
+	/**
+	 * Merkle批次号
+	 */
+	private String merkleBatchNo;
+
+	/**
+	 * 叶子哈希
+	 */
+	private String leafHash;
 	
 	
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
@@ -305,6 +332,46 @@ public class JuanzengjiluEntity<T> implements Serializable {
 	 */
 	public String getIspay() {
 		return ispay;
+	}
+
+	public Long getMujuanxiangmuId() {
+		return mujuanxiangmuId;
+	}
+
+	public void setMujuanxiangmuId(Long mujuanxiangmuId) {
+		this.mujuanxiangmuId = mujuanxiangmuId;
+	}
+
+	public Date getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(Date payTime) {
+		this.payTime = payTime;
+	}
+
+	public String getMerkleStatus() {
+		return merkleStatus;
+	}
+
+	public void setMerkleStatus(String merkleStatus) {
+		this.merkleStatus = merkleStatus;
+	}
+
+	public String getMerkleBatchNo() {
+		return merkleBatchNo;
+	}
+
+	public void setMerkleBatchNo(String merkleBatchNo) {
+		this.merkleBatchNo = merkleBatchNo;
+	}
+
+	public String getLeafHash() {
+		return leafHash;
+	}
+
+	public void setLeafHash(String leafHash) {
+		this.leafHash = leafHash;
 	}
 
 }

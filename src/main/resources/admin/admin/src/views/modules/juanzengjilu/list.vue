@@ -1,70 +1,70 @@
-<template>
+﻿<template>
 	<div class="main-content" :style='{"width":"100%","padding":"20px 30px","fontSize":"15px","background":"#ffffff"}'>
-		<!-- 列表页 -->
+		<!-- 鍒楄〃椤?-->
 		<template v-if="showFlag">
 			<el-form class="center-form-pv" :style='{"border":"0px solid #fff","margin":"0 0px 0px","flexWrap":"wrap","background":"none","display":"flex","width":"100%","justifyContent":"space-between"}' :inline="true" :model="searchForm">
 				<el-row :style='{"padding":"10px","alignItems":"center","flexWrap":"wrap","background":"none","display":"flex","order":"2"}' >
 					<div :style='{"alignItems":"center","margin":"0 10px 0 0","display":"flex"}'>
-						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">捐赠编号</label>
-						<el-input v-model="searchForm.juanzengbianhao" placeholder="捐赠编号" @keydown.enter.native="search()" clearable></el-input>
+						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">鎹愯禒缂栧彿</label>
+						<el-input v-model="searchForm.juanzengbianhao" placeholder="鎹愯禒缂栧彿" @keydown.enter.native="search()" clearable></el-input>
 					</div>
 					<div :style='{"alignItems":"center","margin":"0 10px 0 0","display":"flex"}'>
-						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">项目名称</label>
-						<el-input v-model="searchForm.xiangmumingcheng" placeholder="项目名称" @keydown.enter.native="search()" clearable></el-input>
+						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">椤圭洰鍚嶇О</label>
+						<el-input v-model="searchForm.xiangmumingcheng" placeholder="椤圭洰鍚嶇О" @keydown.enter.native="search()" clearable></el-input>
 					</div>
 					<div :style='{"alignItems":"center","margin":"0 10px 0 0","display":"flex"}'>
-						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">项目类型</label>
-						<el-input v-model="searchForm.xiangmuleixing" placeholder="项目类型" @keydown.enter.native="search()" clearable></el-input>
+						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">椤圭洰绫诲瀷</label>
+						<el-input v-model="searchForm.xiangmuleixing" placeholder="椤圭洰绫诲瀷" @keydown.enter.native="search()" clearable></el-input>
 					</div>
 					<div :style='{"alignItems":"center","margin":"0 10px 0 0","display":"flex"}'>
-						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">地区</label>
-						<el-input v-model="searchForm.diqu" placeholder="地区" @keydown.enter.native="search()" clearable></el-input>
+						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">鍦板尯</label>
+						<el-input v-model="searchForm.diqu" placeholder="鍦板尯" @keydown.enter.native="search()" clearable></el-input>
 					</div>
 					<div :style='{"alignItems":"center","margin":"0 10px 0 0","display":"flex"}' class="select">
-						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">是否支付</label>
-						<el-select clearable v-model="searchForm.ispay" placeholder="是否支付">
+						<label :style='{"margin":"0 10px 0 0","whiteSpace":"nowrap","color":"#666","display":"inline-block","lineHeight":"40px","fontSize":"inherit","fontWeight":"500","height":"40px"}' class="item-label">鏄惁鏀粯</label>
+						<el-select clearable v-model="searchForm.ispay" placeholder="鏄惁鏀粯">
 							<el-option v-for="(item,index) in isPayOptions" v-bind:key="index" :label="item" :value="item"></el-option>
 						</el-select>
 					</div>
 					<el-button class="search" type="success" @click="search()">
 						<span class="icon iconfont icon-fangdajing07" :style='{"margin":"0 2px","fontSize":"16px","color":"#fff","display":"none","height":"40px"}'></span>
-						查询
+						鏌ヨ
 					</el-button>
 				</el-row>
 
 				<el-row class="actions" :style='{"padding":"10px","margin":"0px 0","flexWrap":"wrap","background":"none","display":"flex"}'>
-					<el-button class="add" v-if="isAuth('juanzengjilu','新增')" type="success" @click="addOrUpdateHandler()">
+					<el-button class="add" v-if="isAuth('juanzengjilu','鏂板')" type="success" @click="addOrUpdateHandler()">
 						<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"34px"}'></span>
-						添加
+						娣诲姞
 					</el-button>
-					<el-button class="del" v-if="isAuth('juanzengjilu','删除')" :disabled="dataListSelections.length?false:true" type="danger" @click="deleteHandler()">
+					<el-button class="del" v-if="isAuth('juanzengjilu','鍒犻櫎')" :disabled="dataListSelections.length?false:true" type="danger" @click="deleteHandler()">
 						<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"34px"}'></span>
-						删除
+						鍒犻櫎
 					</el-button>
 
 
-					<download-excel v-if="isAuth('juanzengjilu','导出')" class="export-excel-wrapper" :data = "dataList" :fields = "json_fields" name = "捐赠记录.xls">
-						<!-- 导出excel -->
+					<download-excel v-if="isAuth('juanzengjilu','瀵煎嚭')" class="export-excel-wrapper" :data = "dataList" :fields = "json_fields" name = "鎹愯禒璁板綍.xls">
+						<!-- 瀵煎嚭excel -->
 						<el-button class="btn18" type="success">
 							<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"34px"}'></span>
-							导出
+							瀵煎嚭
 						</el-button>
 					</download-excel>
-					<el-button class="btn18" v-if="isAuth('juanzengjilu','支付')" :disabled="dataListSelections.length?false:true" type="success" @click="payBatch()">
+					<el-button class="btn18" v-if="isAuth('juanzengjilu','鏀粯')" :disabled="dataListSelections.length?false:true" type="success" @click="payBatch()">
 						<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"34px"}'></span>
-						批量支付
+						鎵归噺鏀粯
 					</el-button>
-					<el-button class="btn18" v-if="isAuth('juanzengjilu','项目捐赠金额')" type="success" @click="chartDialog1()">
+					<el-button class="btn18" v-if="isAuth('juanzengjilu','椤圭洰鎹愯禒閲戦')" type="success" @click="chartDialog1()">
 						<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"34px"}'></span>
-						项目捐赠金额
+						椤圭洰鎹愯禒閲戦
 					</el-button>
-					<el-button class="btn18" v-if="isAuth('juanzengjilu','用户捐赠金额')" type="success" @click="chartDialog2()">
+					<el-button class="btn18" v-if="isAuth('juanzengjilu','鐢ㄦ埛鎹愯禒閲戦')" type="success" @click="chartDialog2()">
 						<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"34px"}'></span>
-						用户捐赠金额
+						鐢ㄦ埛鎹愯禒閲戦
 					</el-button>
-					<el-button class="btn18" v-if="isAuth('juanzengjilu','地区捐赠金额')" type="success" @click="chartDialog3()">
+					<el-button class="btn18" v-if="isAuth('juanzengjilu','鍦板尯鎹愯禒閲戦')" type="success" @click="chartDialog3()">
 						<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"34px"}'></span>
-						地区捐赠金额
+						鍦板尯鎹愯禒閲戦
 					</el-button>
 				</el-row>
 			</el-form>
@@ -73,115 +73,115 @@
 					:stripe='true'
 					:style='{"padding":"0px 0","borderColor":"#eee","borderRadius":"0","borderWidth":"0px 0 0 0px","background":"none","width":"100%","fontSize":"inherit","borderStyle":"solid"}' 
 					:border='true'
-					v-if="isAuth('juanzengjilu','查看')"
+					v-if="isAuth('juanzengjilu','鏌ョ湅')"
 					:data="dataList"
 					v-loading="dataListLoading"
 				@selection-change="selectionChangeHandler">
 					<el-table-column :resizable='true' type="selection" align="center" width="50"></el-table-column>
-					<el-table-column :resizable='true' :sortable='true' label="序号" type="index" width="50" />
+					<el-table-column :resizable='true' :sortable='true' label="搴忓彿" type="index" width="50" />
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="juanzengbianhao"
-						label="捐赠编号">
+						label="鎹愯禒缂栧彿">
 						<template slot-scope="scope">
 							{{scope.row.juanzengbianhao}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="xiangmumingcheng"
-						label="项目名称">
+						label="椤圭洰鍚嶇О">
 						<template slot-scope="scope">
 							{{scope.row.xiangmumingcheng}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="xiangmuleixing"
-						label="项目类型">
+						label="椤圭洰绫诲瀷">
 						<template slot-scope="scope">
 							{{scope.row.xiangmuleixing}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="diqu"
-						label="地区">
+						label="鍦板尯">
 						<template slot-scope="scope">
 							{{scope.row.diqu}}
 						</template>
 					</el-table-column>
-					<el-table-column  :resizable='true' prop="tupian" width="200" label="图片">
+					<el-table-column  :resizable='true' prop="tupian" width="200" label="鍥剧墖">
 						<template slot-scope="scope">
 							<div v-if="scope.row.tupian">
 								<img v-if="scope.row.tupian.substring(0,4)=='http'&&scope.row.tupian.split(',w').length>1" :src="scope.row.tupian" width="100" height="100" style="object-fit: cover" @click="imgPreView(scope.row.tupian)">
 								<img v-else-if="scope.row.tupian.substring(0,4)=='http'" :src="scope.row.tupian.split(',')[0]" width="100" height="100" style="object-fit: cover" @click="imgPreView(scope.row.tupian.split(',')[0])">
 								<img v-else :src="$base.url+scope.row.tupian.split(',')[0]" width="100" height="100" style="object-fit: cover" @click="imgPreView($base.url+scope.row.tupian.split(',')[0])">
 							</div>
-							<div v-else>无图片</div>
+							<div v-else>鏃犲浘鐗?/div>
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="yijuanjine"
-						label="捐赠金额">
+						label="鎹愯禒閲戦">
 						<template slot-scope="scope">
 							{{scope.row.yijuanjine}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="juanzengshijian"
-						label="捐赠时间">
+						label="鎹愯禒鏃堕棿">
 						<template slot-scope="scope">
 							{{scope.row.juanzengshijian}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="juanzengzhanghao"
-						label="捐赠账号">
+						label="鎹愯禒璐﹀彿">
 						<template slot-scope="scope">
 							{{scope.row.juanzengzhanghao}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="xingming"
-						label="捐赠姓名">
+						label="鎹愯禒濮撳悕">
 						<template slot-scope="scope">
 							{{scope.row.xingming}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="mujuanzhezhanghao"
-						label="募捐者账号">
+						label="鍕熸崘鑰呰处鍙?>
 						<template slot-scope="scope">
 							{{scope.row.mujuanzhezhanghao}}
 						</template>
 					</el-table-column>
 					<el-table-column :resizable='true' :sortable='true'  
 						prop="mujuanzhexingming"
-						label="募捐者姓名">
+						label="鍕熸崘鑰呭鍚?>
 						<template slot-scope="scope">
 							{{scope.row.mujuanzhexingming}}
 						</template>
 					</el-table-column>
-					<el-table-column :resizable='true' :sortable='true' prop="ispay" label="是否支付">
+					<el-table-column :resizable='true' :sortable='true' prop="ispay" label="鏄惁鏀粯">
 						<template slot-scope="scope">
-							<span style="margin-right:10px">{{scope.row.ispay=='已支付'?'已支付':'未支付'}}</span>
-							<el-button v-if="scope.row.ispay!='已支付' && isAuth('juanzengjilu','支付') " type="text" size="small" @click="payHandler(scope.row)">支付</el-button>
+							<span style="margin-right:10px">{{scope.row.ispay=='宸叉敮浠??'宸叉敮浠?:'鏈敮浠?}}</span>
+							<el-button v-if="scope.row.ispay!='宸叉敮浠? && isAuth('juanzengjilu','鏀粯') " type="text" size="small" @click="payHandler(scope.row)">鏀粯</el-button>
 						</template>
 					</el-table-column>
-					<el-table-column width="300" label="操作">
+					<el-table-column width="300" label="鎿嶄綔">
 						<template slot-scope="scope">
-							<el-button class="view" v-if=" isAuth('juanzengjilu','查看')" type="success" @click="addOrUpdateHandler(scope.row.id,'info')">
+							<el-button class="view" v-if=" isAuth('juanzengjilu','鏌ョ湅')" type="success" @click="addOrUpdateHandler(scope.row.id,'info')">
 								<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"40px"}'></span>
-								查看
+								鏌ョ湅
 							</el-button>
-							<el-button class="edit" v-if=" isAuth('juanzengjilu','修改') " type="success" @click="addOrUpdateHandler(scope.row.id)">
+							<el-button class="edit" v-if=" isAuth('juanzengjilu','淇敼') " type="success" @click="addOrUpdateHandler(scope.row.id)">
 								<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"40px"}'></span>
-								修改
+								淇敼
 							</el-button>
 
 
 
 
-							<el-button class="del" v-if="isAuth('juanzengjilu','删除') " type="primary" @click="deleteHandler(scope.row.id )">
+							<el-button class="del" v-if="isAuth('juanzengjilu','鍒犻櫎') " type="primary" @click="deleteHandler(scope.row.id )">
 								<span class="icon iconfont icon-xihuan" :style='{"margin":"0 2px","fontSize":"14px","color":"#fff","display":"none","height":"40px"}'></span>
-								删除
+								鍒犻櫎
 							</el-button>
 						</template>
 					</el-table-column>
@@ -203,7 +203,7 @@
 			></el-pagination>
 		</template>
 		
-		<!-- 添加/修改页面  将父组件的search方法传递给子组件-->
+		<!-- 娣诲姞/淇敼椤甸潰  灏嗙埗缁勪欢鐨剆earch鏂规硶浼犻€掔粰瀛愮粍浠?->
 		<add-or-update v-if="addOrUpdateFlag" :parent="this" ref="addOrUpdate"></add-or-update>
 
 
@@ -214,7 +214,7 @@
 			width="800">
 			<div id="yijuanjineChart1" style="width:100%;height:600px;"></div>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="chartDialog1">返回</el-button>
+				<el-button @click="chartDialog1">杩斿洖</el-button>
 			</span>
 		</el-dialog>
 		<el-dialog
@@ -222,7 +222,7 @@
 			width="800">
 			<div id="yijuanjineChart2" style="width:100%;height:600px;"></div>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="chartDialog2">返回</el-button>
+				<el-button @click="chartDialog2">杩斿洖</el-button>
 			</span>
 		</el-dialog>
 		<el-dialog
@@ -230,11 +230,11 @@
 			width="800">
 			<div id="yijuanjineChart3" style="width:100%;height:600px;"></div>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="chartDialog3">返回</el-button>
+				<el-button @click="chartDialog3">杩斿洖</el-button>
 			</span>
 		</el-dialog>
 
-		<el-dialog title="预览图" :visible.sync="previewVisible" width="50%">
+		<el-dialog title="棰勮鍥? :visible.sync="previewVisible" width="50%">
 			<img :src="previewImg" alt="" style="width: 100%;">
 		</el-dialog>
 	</div>
@@ -275,21 +275,21 @@
 				chartVisiable3: false,
 				addOrUpdateFlag:false,
 				layouts: ["prev","pager","next","sizes","jumper"],
-//导出excel
+//瀵煎嚭excel
 				json_fields: {
-					"捐赠编号": "juanzengbianhao",    //常规字段
-					"项目名称": "xiangmumingcheng",    //常规字段
-					"项目类型": "xiangmuleixing",    //常规字段
-					"地区": "diqu",    //常规字段
-					"图片": "tupian",    //常规字段
-					"捐赠金额": "yijuanjine",    //常规字段
-					"捐赠详情": "juanzengxiangqing",    //常规字段
-					"捐赠时间": "juanzengshijian",    //常规字段
-					"捐赠账号": "juanzengzhanghao",    //常规字段
-					"捐赠姓名": "xingming",    //常规字段
-					"募捐者账号": "mujuanzhezhanghao",    //常规字段
-					"募捐者姓名": "mujuanzhexingming",    //常规字段
-					"是否支付": "ispay",    //常规字段
+					"鎹愯禒缂栧彿": "juanzengbianhao",    //甯歌瀛楁
+					"椤圭洰鍚嶇О": "xiangmumingcheng",    //甯歌瀛楁
+					"椤圭洰绫诲瀷": "xiangmuleixing",    //甯歌瀛楁
+					"鍦板尯": "diqu",    //甯歌瀛楁
+					"鍥剧墖": "tupian",    //甯歌瀛楁
+					"鎹愯禒閲戦": "yijuanjine",    //甯歌瀛楁
+					"鎹愯禒璇︽儏": "juanzengxiangqing",    //甯歌瀛楁
+					"鎹愯禒鏃堕棿": "juanzengshijian",    //甯歌瀛楁
+					"鎹愯禒璐﹀彿": "juanzengzhanghao",    //甯歌瀛楁
+					"鎹愯禒濮撳悕": "xingming",    //甯歌瀛楁
+					"鍕熸崘鑰呰处鍙?: "mujuanzhezhanghao",    //甯歌瀛楁
+					"鍕熸崘鑰呭鍚?: "mujuanzhexingming",    //甯歌瀛楁
+					"鏄惁鏀粯": "ispay",    //甯歌瀛楁
 				},
 				json_meta: [
 					[
@@ -332,7 +332,7 @@
 			contentStyleChange() {
 				this.contentPageStyleChange()
 			},
-			// 分页
+			// 鍒嗛〉
 			contentPageStyleChange(){
 				let arr = []
 
@@ -352,24 +352,21 @@
 				this.$storage.set('payObject',row);
 				this.$router.push('pay');
 			},
+			// 鎵归噺鏀粯
 			// 批量支付
 			payBatch(){
 				for(let x in this.dataListSelections){
 					if(this.dataListSelections[x].ispay=='已支付'){
-						this.$message.error('所选订单存在已支付订单')
+						this.$message.error('所选记录中存在已支付订单')
 						return false
 					}
 				}
-				this.$confirm('是否支付所选订单？').then(_ => {
+				this.$confirm('是否支付所选订单？').then(async _ => {
 					let arr = JSON.parse(JSON.stringify(this.dataListSelections))
 					for(let i in arr){
-						arr[i].ispay = '已支付'
-						this.$http({
-							url: 'juanzengjilu/update',
+						await this.$http({
+							url: `juanzengjilu/pay/${arr[i].id}`, 
 							method: "post",
-							data: arr[i]
-						}).then(res=>{
-							
 						})
 					}
 					this.$message({
@@ -382,9 +379,7 @@
 					});
 				}).catch(_ => {});
 			},
-
-
-			// 统计接口
+			// 缁熻鎺ュ彛
 			chartDialog1() {
 				this.chartVisiable1 = !this.chartVisiable1;
 				this.$nextTick(()=>{
@@ -411,7 +406,7 @@
 							}
 							var option = {};
 							let titleObj = this.bar.title
-							titleObj.text = '项目捐赠金额'
+							titleObj.text = '椤圭洰鎹愯禒閲戦'
 							
 							const legendObj = this.bar.legend
 							let tooltipObj = {trigger: 'item',formatter: '{b} : {c}'}
@@ -439,10 +434,8 @@
 								yAxis: yAxisObj,
 								series: [seriesObj]
 							};
-							// 使用刚指定的配置项和数据显示图表。
-							yijuanjineChart1.setOption(option);
-							  //根据窗口的大小变动图表
-							window.onresize = function() {
+							// 浣跨敤鍒氭寚瀹氱殑閰嶇疆椤瑰拰鏁版嵁鏄剧ず鍥捐〃銆?							yijuanjineChart1.setOption(option);
+							  //鏍规嵁绐楀彛鐨勫ぇ灏忓彉鍔ㄥ浘琛?							window.onresize = function() {
 								yijuanjineChart1.resize();
 							};
 						}else{
@@ -456,7 +449,7 @@
 				})
 			},
 
-			// 统计接口
+			// 缁熻鎺ュ彛
 			chartDialog2() {
 				this.chartVisiable2 = !this.chartVisiable2;
 				this.$nextTick(()=>{
@@ -484,7 +477,7 @@
 							}
 							var option = {};
 							let titleObj = this.bar.title
-							titleObj.text = '用户捐赠金额'
+							titleObj.text = '鐢ㄦ埛鎹愯禒閲戦'
 							
 							const legendObj = this.bar.legend
 							let tooltipObj = {trigger: 'item',formatter: '{b} : {c}'}
@@ -514,10 +507,8 @@
 								series: [seriesObj],
 								grid: gridObj
 							};
-							// 使用刚指定的配置项和数据显示图表。
-							yijuanjineChart2.setOption(option);
-							//根据窗口的大小变动图表
-							window.onresize = function() {
+							// 浣跨敤鍒氭寚瀹氱殑閰嶇疆椤瑰拰鏁版嵁鏄剧ず鍥捐〃銆?							yijuanjineChart2.setOption(option);
+							//鏍规嵁绐楀彛鐨勫ぇ灏忓彉鍔ㄥ浘琛?							window.onresize = function() {
 								yijuanjineChart2.resize();
 							};
 						}else{
@@ -531,7 +522,7 @@
 				})
 			},
 
-			// 统计接口
+			// 缁熻鎺ュ彛
 			chartDialog3() {
 				this.chartVisiable3 = !this.chartVisiable3;
 				this.$nextTick(()=>{
@@ -559,7 +550,7 @@
 							}
 							var option = {};
 							let titleObj = this.line.title
-							titleObj.text = '地区捐赠金额'
+							titleObj.text = '鍦板尯鎹愯禒閲戦'
 							
 							const legendObj = this.line.legend
 							let tooltipObj = { trigger: 'item',formatter: '{b} : {c}'}
@@ -591,10 +582,8 @@
 								series: [seriesObj],
 								grid: gridObj
 							};
-							// 使用刚指定的配置项和数据显示图表。
-							yijuanjineChart3.setOption(option);
-							//根据窗口的大小变动图表
-							window.onresize = function() {
+							// 浣跨敤鍒氭寚瀹氱殑閰嶇疆椤瑰拰鏁版嵁鏄剧ず鍥捐〃銆?							yijuanjineChart3.setOption(option);
+							//鏍规嵁绐楀彛鐨勫ぇ灏忓彉鍔ㄥ浘琛?							window.onresize = function() {
 								yijuanjineChart3.resize();
 							};
 						}else{
@@ -609,14 +598,14 @@
 			},
 
 			init () {
-				this.isPayOptions = "已支付,未支付".split(',')
+				this.isPayOptions = "宸叉敮浠?鏈敮浠?.split(',')
 			},
 			search() {
 				this.pageIndex = 1;
 				this.getDataList();
 			},
 
-			// 获取数据列表
+			// 鑾峰彇鏁版嵁鍒楄〃
 			getDataList() {
 				this.dataListLoading = true;
 				let params = {
@@ -656,22 +645,19 @@
 					this.dataListLoading = false;
 				});
 			},
-			// 每页数
-			sizeChangeHandle(val) {
+			// 姣忛〉鏁?			sizeChangeHandle(val) {
 				this.pageSize = val;
 				this.pageIndex = 1;
 				this.getDataList();
 			},
-			// 当前页
-			currentChangeHandle(val) {
+			// 褰撳墠椤?			currentChangeHandle(val) {
 				this.pageIndex = val;
 				this.getDataList();
 			},
-			// 多选
-			selectionChangeHandler(val) {
+			// 澶氶€?			selectionChangeHandler(val) {
 				this.dataListSelections = val;
 			},
-			// 添加/修改
+			// 娣诲姞/淇敼
 			addOrUpdateHandler(id,type) {
 				this.showFlag = false;
 				this.addOrUpdateFlag = true;
@@ -683,14 +669,14 @@
 					this.$refs.addOrUpdate.init(id,type);
 				});
 			},
-			// 删除
+			// 鍒犻櫎
 			async deleteHandler(id ) {
 				var ids = id? [Number(id)]: this.dataListSelections.map(item => {
 					return Number(item.id);
 				});
-				await this.$confirm(`确定进行[${id ? "删除" : "批量删除"}]操作?`, "提示", {
-					confirmButtonText: "确定",
-					cancelButtonText: "取消",
+				await this.$confirm(`纭畾杩涜[${id ? "鍒犻櫎" : "鎵归噺鍒犻櫎"}]鎿嶄綔?`, "鎻愮ず", {
+					confirmButtonText: "纭畾",
+					cancelButtonText: "鍙栨秷",
 					type: "warning"
 				}).then(async () => {
 					await this.$http({
@@ -700,7 +686,7 @@
 					}).then(async ({ data }) => {
 						if (data && data.code === 0) {
 							this.$message({
-								message: "操作成功",
+								message: "鎿嶄綔鎴愬姛",
 								type: "success",
 								duration: 1500,
 								onClose: () => {
@@ -721,7 +707,7 @@
 	};
 </script>
 <style lang="scss" scoped>
-	//导出excel
+	//瀵煎嚭excel
 	.export-excel-wrapper{
 		display: inline-block;
 	}
@@ -1393,3 +1379,4 @@
 	}
 
 </style>
+

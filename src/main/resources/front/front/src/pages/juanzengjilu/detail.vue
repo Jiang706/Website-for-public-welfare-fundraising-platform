@@ -66,10 +66,20 @@
 						<div class="lable">是否支付</div>
 						<div class="text">{{detail.ispay=='已支付'?'已支付':'未支付'}}</div>
 					</div>
+					<div class="item" v-if="detail.ispay=='已支付'">
+						<div class="lable">Merkle状态</div>
+						<div class="text">{{detail.merkleStatus||'PENDING'}}</div>
+					</div>
+					<div class="item" v-if="detail.ispay=='已支付'">
+						<div class="lable">Merkle批次</div>
+						<div class="text">{{detail.merkleBatchNo||'-'}}</div>
+					</div>
 					<div class="btn_box">
 						<el-button class="editBtn" v-if="btnAuth('juanzengjilu','修改')" @click="editClick">修改</el-button>
 						<el-button class="delBtn" v-if="btnAuth('juanzengjilu','删除')" @click="delClick">删除</el-button>
 						<el-button class="payBtn" v-if="(detail.ispay=='未支付'||!detail.ispay)&&btnAuth('juanzengjilu','支付')" type="warning" size="small" @click="payClick">支付</el-button>
+						<el-button class="payBtn" v-if="detail.ispay=='已支付'" type="warning" size="small" @click="downloadProof">下载证明</el-button>
+						<el-button class="payBtn" v-if="detail.ispay=='已支付'" type="warning" size="small" @click="goVerify">去验证</el-button>
 					</div>
 				</div>
 			</div>
@@ -158,6 +168,24 @@
 				localStorage.setItem('paytable','juanzengjilu')
 				localStorage.setItem('payObject',JSON.stringify(this.detail))
 				this.$router.push({path:'/index/pay'})
+			},
+			downloadProof(){
+				this.$http.get(`merkle/proof/${this.detail.id}`).then(res => {
+					if (res.data.code !== 0) {
+						this.$message.error(res.data.msg || '获取证明失败')
+						return
+					}
+					const json = JSON.stringify(res.data.data, null, 2)
+					const blob = new Blob([json], { type: 'application/json;charset=utf-8' })
+					const link = document.createElement('a')
+					link.href = URL.createObjectURL(blob)
+					link.download = `donation-proof-${this.detail.id}.json`
+					link.click()
+					URL.revokeObjectURL(link.href)
+				})
+			},
+			goVerify(){
+				this.$router.push({path:'/index/merkleVerify',query:{donationId:this.detail.id}})
 			},
 			curChange(page) {
 				this.getDiscussList(page);

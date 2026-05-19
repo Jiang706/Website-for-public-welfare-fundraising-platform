@@ -47,6 +47,7 @@ import discussmujuanxiangmuAdd from '../pages/discussmujuanxiangmu/add'
 import discussxiangmujinzhanList from '../pages/discussxiangmujinzhan/list'
 import discussxiangmujinzhanDetail from '../pages/discussxiangmujinzhan/detail'
 import discussxiangmujinzhanAdd from '../pages/discussxiangmujinzhan/add'
+import merkleVerify from '../pages/merkle/verify'
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -235,6 +236,10 @@ export default new VueRouter({
 				{
 					path: 'discussxiangmujinzhanAdd',
 					component: discussxiangmujinzhanAdd
+				},
+				{
+					path: 'merkleVerify',
+					component: merkleVerify
 				},
 			]
 		},

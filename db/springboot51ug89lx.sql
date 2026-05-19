@@ -583,3 +583,43 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-05-19 15:49:21
+
+-- ============================================================
+-- Merkle trust extension
+-- ============================================================
+ALTER TABLE `juanzengjilu`
+  ADD COLUMN `mujuanxiangmu_id` bigint(20) DEFAULT NULL COMMENT '募捐项目ID' AFTER `id`,
+  ADD COLUMN `pay_time` datetime DEFAULT NULL COMMENT '支付时间' AFTER `ispay`,
+  ADD COLUMN `merkle_status` varchar(32) DEFAULT 'UNPAID' COMMENT 'Merkle状态' AFTER `pay_time`,
+  ADD COLUMN `merkle_batch_no` varchar(64) DEFAULT NULL COMMENT 'Merkle批次号' AFTER `merkle_status`,
+  ADD COLUMN `leaf_hash` varchar(128) DEFAULT NULL COMMENT '叶子哈希' AFTER `merkle_batch_no`;
+
+CREATE INDEX `idx_juanzengjilu_campaign_id` ON `juanzengjilu` (`mujuanxiangmu_id`);
+CREATE INDEX `idx_juanzengjilu_merkle_status` ON `juanzengjilu` (`merkle_status`);
+CREATE INDEX `idx_juanzengjilu_merkle_batch_no` ON `juanzengjilu` (`merkle_batch_no`);
+
+CREATE TABLE `merkle_batch` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `batch_no` varchar(64) NOT NULL,
+  `campaign_id` bigint(20) DEFAULT NULL,
+  `root_hash` varchar(128) NOT NULL,
+  `leaf_count` int(11) NOT NULL,
+  `status` varchar(32) DEFAULT 'PUBLISHED',
+  `published_at` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_merkle_batch_no` (`batch_no`),
+  KEY `idx_merkle_batch_campaign` (`campaign_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Merkle批次';
+
+CREATE TABLE `merkle_proof` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `juanzengjilu_id` bigint(20) NOT NULL,
+  `batch_no` varchar(64) NOT NULL,
+  `leaf_index` int(11) NOT NULL,
+  `proof_json` longtext,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_merkle_proof_donation` (`juanzengjilu_id`),
+  KEY `idx_merkle_proof_batch` (`batch_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Merkle证明';

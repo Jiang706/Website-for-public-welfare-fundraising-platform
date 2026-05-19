@@ -28,6 +28,7 @@ import com.entity.JuanzengjiluEntity;
 import com.entity.view.JuanzengjiluView;
 
 import com.service.JuanzengjiluService;
+import com.service.MerkleTrustService;
 import com.service.TokenService;
 import com.utils.PageUtils;
 import com.utils.R;
@@ -49,6 +50,9 @@ import java.io.IOException;
 public class JuanzengjiluController {
     @Autowired
     private JuanzengjiluService juanzengjiluService;
+
+    @Autowired
+    private MerkleTrustService merkleTrustService;
 
 
 
@@ -164,6 +168,18 @@ public class JuanzengjiluController {
     @SysLog("新增捐赠记录") 
     public R save(@RequestBody JuanzengjiluEntity juanzengjilu, HttpServletRequest request){
         //ValidatorUtils.validateEntity(juanzengjilu);
+        if(StringUtils.isBlank(juanzengjilu.getIspay())) {
+            juanzengjilu.setIspay("未支付");
+        }
+        if("已支付".equals(juanzengjilu.getIspay())) {
+            if(juanzengjilu.getPayTime() == null) {
+                juanzengjilu.setPayTime(new Date());
+            }
+            juanzengjilu.setMerkleStatus(MerkleTrustService.STATUS_PENDING);
+            juanzengjilu.setLeafHash(merkleTrustService.buildLeafHash(juanzengjilu));
+        } else {
+            juanzengjilu.setMerkleStatus(MerkleTrustService.STATUS_UNPAID);
+        }
         juanzengjiluService.insert(juanzengjilu);
         return R.ok().put("data",juanzengjilu.getId());
     }
@@ -175,8 +191,54 @@ public class JuanzengjiluController {
     @RequestMapping("/add")
     public R add(@RequestBody JuanzengjiluEntity juanzengjilu, HttpServletRequest request){
         //ValidatorUtils.validateEntity(juanzengjilu);
+        if(StringUtils.isBlank(juanzengjilu.getIspay())) {
+            juanzengjilu.setIspay("未支付");
+        }
+        if("已支付".equals(juanzengjilu.getIspay())) {
+            if(juanzengjilu.getPayTime() == null) {
+                juanzengjilu.setPayTime(new Date());
+            }
+            juanzengjilu.setMerkleStatus(MerkleTrustService.STATUS_PENDING);
+            juanzengjilu.setLeafHash(merkleTrustService.buildLeafHash(juanzengjilu));
+        } else {
+            juanzengjilu.setMerkleStatus(MerkleTrustService.STATUS_UNPAID);
+        }
         juanzengjiluService.insert(juanzengjilu);
         return R.ok().put("data",juanzengjilu.getId());
+    }
+
+    /**
+     * 支付
+     */
+    @RequestMapping("/pay/{id}")
+    @Transactional
+    @SysLog("支付捐赠记录")
+    public R pay(@PathVariable("id") Long id, HttpServletRequest request){
+        JuanzengjiluEntity donation = juanzengjiluService.selectById(id);
+        if(donation == null){
+            return R.error("捐赠记录不存在");
+        }
+
+        Object tableObj = request.getSession().getAttribute("tableName");
+        Object userObj = request.getSession().getAttribute("username");
+        String tableName = tableObj == null ? "" : tableObj.toString();
+        String username = userObj == null ? "" : userObj.toString();
+        if("juanzengzhe".equals(tableName) && !username.equals(donation.getJuanzengzhanghao())) {
+            return R.error("无权限支付该记录");
+        }
+
+        if("已支付".equals(donation.getIspay())) {
+            return R.ok("该记录已支付").put("data", donation.getId());
+        }
+
+        donation.setIspay("已支付");
+        donation.setPayTime(new Date());
+        donation.setMerkleStatus(MerkleTrustService.STATUS_PENDING);
+        donation.setMerkleBatchNo(null);
+        donation.setLeafHash(merkleTrustService.buildLeafHash(donation));
+        juanzengjiluService.updateById(donation);
+
+        return R.ok().put("data", donation.getId());
     }
 
 

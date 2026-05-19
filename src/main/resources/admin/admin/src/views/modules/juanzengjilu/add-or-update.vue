@@ -170,6 +170,7 @@
 					xingming: '',
 					mujuanzhezhanghao: '',
 					mujuanzhexingming: '',
+					mujuanxiangmuId: '',
 				},
 
 				rules: {
@@ -240,6 +241,7 @@
 					this.info(id);
 				}else if(this.type=='cross'){
 					var obj = this.$storage.getObj('crossObj');
+					this.ruleForm.mujuanxiangmuId = obj.id
 					for (var o in obj){
 						if(o=='juanzengbianhao'){
 							this.ruleForm.juanzengbianhao = obj[o];
